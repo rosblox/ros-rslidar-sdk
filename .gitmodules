@@ -1,0 +1,6 @@
+[submodule "rslidar_sdk"]
+	path = rslidar_sdk
+	url = https://github.com/rosblox/rslidar_sdk.git
+[submodule "rslidar_msg"]
+	path = rslidar_msg
+	url = git@github.com:rosblox/rslidar_msg.git
