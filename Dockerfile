@@ -5,6 +5,8 @@ FROM ros:${ROS_DISTRO}-ros-core
 RUN apt update && apt install -y --no-install-recommends \
     build-essential \
     python3-colcon-common-extensions \
+    libpcap0.8-dev \
+    ros-humble-yaml-cpp-vendor \
     && rm -rf /var/lib/apt/lists/*
 
 COPY ros_entrypoint.sh .
@@ -17,5 +19,5 @@ COPY rslidar_msg src/rslidar_msg
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && colcon build --symlink-install --event-handlers console_direct+
 
 RUN echo 'alias build="colcon build --symlink-install  --event-handlers console_direct+"' >> ~/.bashrc
-RUN echo 'source /opt/ros/humble/setup.bash; source /colcon_ws/install/setup.bash; echo UID: $UID; echo ROS_DOMAIN_ID: $ROS_DOMAIN_ID; ros2 launch ros_encoder ros_encoder.launch.py' >> /run.sh && chmod +x /run.sh
+RUN echo 'source /opt/ros/humble/setup.bash; source /colcon_ws/install/setup.bash; echo UID: $UID; echo ROS_DOMAIN_ID: $ROS_DOMAIN_ID; ros2 run rslidar_sdk rslidar_sdk_node' >> /run.sh && chmod +x /run.sh
 RUN echo 'alias run="su - ros --whitelist-environment=\"ROS_DOMAIN_ID\" /run.sh"' >> /etc/bash.bashrc
