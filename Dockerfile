@@ -4,8 +4,6 @@ FROM ros:${ROS_DISTRO}-ros-core
 
 RUN apt update && apt install -y --no-install-recommends \
     build-essential \
-    python3-pip \
-    python3-lgpio \
     python3-colcon-common-extensions \
     && rm -rf /var/lib/apt/lists/*
 
@@ -14,6 +12,7 @@ COPY ros_entrypoint.sh .
 WORKDIR /colcon_ws
 
 COPY rslidar_sdk src/rslidar_sdk
+COPY rslidar_msg src/rslidar_msg
 
 RUN . /opt/ros/${ROS_DISTRO}/setup.sh && colcon build --symlink-install --event-handlers console_direct+
 
